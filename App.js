@@ -1,30 +1,65 @@
-import React from 'react';
-import { SafeAreaView,StyleSheet,ScrollView, View, Text,} from 'react-native';
+import React, {Component} from 'react';
+import { StyleSheet } from 'react-native';
+import { NavigationContainer } from '@react-navigation/native';
+import { createStackNavigator } from '@react-navigation/stack';
+import Titulos from './Livros'
+import Capitulos from './Capitulos'
+import Versiculos from './versiculos'
 
-import Biblia from './biblia-acf.json'
+const Pilha = createStackNavigator()
 
-const livros = ["Gênesis","Êxodo","Levítico","Números","Deuteronômio","Josué","Juízes","Rute","1 Samuel","2 Samuel","1 Reis","2 Reis","1 Crônicas","2 Crônicas","Esdras","Neemias","Ester","Jó","Salmos","Provérbios","Eclesiastes","Cânticos","Isaías","Jeremias","Lamentações","Ezequiel","Daniel","Oséias","Joel","Amós","Obadias","Jonas","Miquéias","Naum","Habacuque","Sofonias","Ageu","Zacarias","Malaquias","Mateus","Marcos","Lucas","João","Atos","Romanos","1 Coríntios","2 Coríntios","Gálatas","Efésios","Filipenses","Colossenses","1 Tessalonicenses","2 Tessalonicenses","1 Timóteo","2 Timóteo","Tito","Filemom","Hebreus","Tiago","1 Pedro","2 Pedro","1 João","2 João","3 João","Judas","Apocalipse"]
-
-export default function App(){
-  return(
-    <SafeAreaView style={styles.container}>
-    <ScrollView style={styles.scrollView}>
-      <Text style={styles.text}>
-         Capitulos {Biblia['Salmos'].length} - Versiculos {Biblia['Salmos'][118].v.length}
-      </Text>
-    </ScrollView>
-  </SafeAreaView>
+function Capitulo({route,navigation}){
+const {nome} = route.params
+  return(     
+      <Capitulos nome={nome}/>   
   )
 }
+
+function Livros({navigation}){
+  return(  
+       <Titulos/>  
+  )
+}
+
+function Vers({route,navigation}){
+  const {liv} = route.params
+  const {cap} = route.params
+
+  return(    
+   
+      <Versiculos liv={liv} cap={cap} />  
+   
+  )
+}
+
+
+export default function  App ()  {
+
+  return (   
+      <NavigationContainer>
+        <Pilha.Navigator>
+          <Pilha.Screen
+            name='Livros'
+            component={Livros}
+          />
+           <Pilha.Screen
+            name='Capitulo'
+            component={Capitulo}
+          />
+          <Pilha.Screen
+            name='Versiculo'
+            component={Vers}
+          />
+        </Pilha.Navigator>
+     </NavigationContainer>     
+  );
+}
+
+
 const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-  },
-  scrollView: {
-    backgroundColor: 'pink',
-    marginHorizontal: 2,
-  },
-  text: {
-    fontSize: 42,
-  },
+  conteiner:{
+    alignItems:'center',
+    padding: 10,
+  }
 });
+
