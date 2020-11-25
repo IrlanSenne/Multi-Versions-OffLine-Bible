@@ -1,5 +1,5 @@
 import React, {Component} from 'react';
-import { StyleSheet } from 'react-native';
+import { StyleSheet,View } from 'react-native';
 import { NavigationContainer } from '@react-navigation/native';
 import { createStackNavigator } from '@react-navigation/stack';
 import Titulos from './Livros'
@@ -26,9 +26,9 @@ function Vers({route,navigation}){
   const {cap} = route.params
 
   return(    
-   
+ 
       <Versiculos liv={liv} cap={cap} />  
-   
+  
   )
 }
 
@@ -57,9 +57,5 @@ export default function  App ()  {
 
 
 const styles = StyleSheet.create({
-  conteiner:{
-    alignItems:'center',
-    padding: 10,
-  }
 });
 
