@@ -3,12 +3,11 @@ import { SafeAreaView, View, StyleSheet, Text,TouchableOpacity,ScrollView } from
 import Biblia from './biblia-acf.json'
 import { useNavigation } from '@react-navigation/native';
 
-
 export default function Capitulos(props){
     const navigation = useNavigation();
     var caps = []
     const livro = props.nome     
-    const numeroCaps =Biblia[livro].length       
+    const numeroCaps =Biblia[livro].length  
         
         for(let i=0;i<numeroCaps;i++){
             caps.push(
@@ -17,8 +16,7 @@ export default function Capitulos(props){
                    <View style={styles.cx}>
                        <Text style={styles.txt}>{i+1}</Text>                   
                     </View>
-                    </TouchableOpacity>
-                   
+                    </TouchableOpacity>                   
                     </View>
 
             )           
@@ -26,7 +24,7 @@ export default function Capitulos(props){
         const listaVers = (l,c)=>{
            navigation.navigate('Versiculo', {liv:l,cap:c})
         }
-
+      
     return(
         <SafeAreaView >
         <ScrollView>

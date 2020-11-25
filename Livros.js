@@ -1,9 +1,18 @@
-import React from 'react';
-import { SafeAreaView, View,TouchableOpacity, FlatList, StyleSheet, Text } from 'react-native';
+import React, {Component, useState, useEffect} from 'react';
+import { SafeAreaView, View,TouchableOpacity, FlatList, StyleSheet, Text, StatusBar, Animated } from 'react-native';
 import { useNavigation } from '@react-navigation/native';
-
+import ShimmerEffect from './shimmerEffect'
 
 export default function livros(){
+
+  useEffect(()=>{
+    let timer = setInterval(()=>{
+      setLoading(false)
+    },1000)
+  },[])
+
+  const [loading, setLoading]=useState(true)
+
     const navigation = useNavigation();
     const livros = [
         {l:'01', livro:"Gênesis"},{l:'02', livro:"Êxodo"},{l:'03', livro:"Levítico"},
@@ -42,12 +51,20 @@ export default function livros(){
           navigation.navigate('Capitulo',{nome:t} )
       }
     return(
-        <SafeAreaView style={styles.container}>
+        <SafeAreaView  style={styles.container}>
+         <StatusBar
+            barStyle='light-content'
+            backgroundColor='rgba(40,15,78,0.7)'
+            hidden={true}
+    />
+        <ShimmerEffect visible={loading}>     
+    
         <FlatList
-       data={livros}
-       renderItem={renderItem}
-       keyExtractor={item => item.l}
+          data={livros}
+          renderItem={renderItem}
+          keyExtractor={item => item.l}
      />  
+     </ShimmerEffect>
     </SafeAreaView>
     )
 }
@@ -58,6 +75,7 @@ const styles = StyleSheet.create({
       flex: 1,
 
     },
+   
     item: {
       backgroundColor: 'rgba(205,202,216,0.4)',
       padding: 10,

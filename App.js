@@ -1,5 +1,5 @@
 import React, {Component} from 'react';
-import { StyleSheet,View } from 'react-native';
+import { StyleSheet,View, StatusBar } from 'react-native';
 import { NavigationContainer } from '@react-navigation/native';
 import { createStackNavigator } from '@react-navigation/stack';
 import Titulos from './Livros'
@@ -16,8 +16,8 @@ const {nome} = route.params
 }
 
 function Livros({navigation}){
-  return(  
-       <Titulos/>  
+  return(     
+       <Titulos/>   
   )
 }
 
@@ -25,19 +25,17 @@ function Vers({route,navigation}){
   const {liv} = route.params
   const {cap} = route.params
 
-  return(    
- 
-      <Versiculos liv={liv} cap={cap} />  
-  
+  return(     
+      <Versiculos liv={liv} cap={cap} />    
   )
 }
 
 
 export default function  App ()  {
 
-  return (   
+  return (  
       <NavigationContainer>
-        <Pilha.Navigator>
+        <Pilha.Navigator headerMode='none'>
           <Pilha.Screen
             name='Livros'
             component={Livros}
@@ -51,7 +49,7 @@ export default function  App ()  {
             component={Vers}
           />
         </Pilha.Navigator>
-     </NavigationContainer>     
+     </NavigationContainer>    
   );
 }
 

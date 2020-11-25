@@ -6,6 +6,11 @@ const {height,width} = Dimensions.get('window')
 
 export default function versiculos(props){
 
+    var vers = []
+    const cap = Number(props.cap)
+    const livro = props.liv
+    const numeroVers =Biblia[livro][cap].v.length
+   
 const [screenWidth,setScreenWidth]=useState(null)
 const [screenHeight,setScreenHeight]=useState(null)    
 
@@ -14,10 +19,7 @@ const [screenHeight,setScreenHeight]=useState(null)
         setScreenHeight(Dimensions.get('window').height)        
     }
  
-    var vers = []
-    const cap = Number(props.cap)
-    const livro = props.liv
-    const numeroVers =Biblia[livro][cap].v.length
+
 
     for(let i=0;i<numeroVers;i++){
         vers.push(
@@ -29,12 +31,12 @@ const [screenHeight,setScreenHeight]=useState(null)
         )           
     }    
     return(       
-        <ScrollView onLayout={_onLayout.bind(this)}>
+        <ScrollView onLayout={_onLayout.bind(this)}>       
             <Text> {vers}</Text>    
         </ScrollView>        
     )
 }
-
+//react-native-shimmer-placeholder, Loading sem spinner
 const styles = StyleSheet.create({
     cx:{
         flex:1,
