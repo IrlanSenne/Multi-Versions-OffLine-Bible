@@ -276,6 +276,222 @@ if(visible){
                </View>
              
               </View>
+              <View style={styles.container}>
+               <View style={styles.item}>
+               <View style={styles.title2}>
+               <Animated.View
+               style={{
+                   width:'30%',
+                   height:'100%',
+                   opacity: 0.3,
+                   backgroundColor:'#fff',
+                   transform:[ { translateX: translateX } ]
+               }}
+               >    
+                  
+                  </Animated.View>
+                  </View>
+               </View>
+             
+              </View>
+              <View style={styles.container}>
+               <View style={styles.item}>
+               <View style={styles.title3}>
+               <Animated.View
+               style={{
+                   width:'30%',
+                   height:'100%',
+                   opacity: 0.3,
+                   backgroundColor:'#fff',
+                   transform:[ { translateX: translateX2 } ]
+               }}
+               >    
+                  
+                  </Animated.View>
+                  </View>
+               </View>
+             
+              </View>
+              <View style={styles.container}>
+               <View style={styles.item}>
+               <View style={styles.title}>
+               <Animated.View
+               style={{
+                   width:'30%',
+                   height:'100%',
+                   opacity: 0.3,
+                   backgroundColor:'#fff',
+                   transform:[ { translateX: translateX } ]
+               }}
+               >    
+                  
+                  </Animated.View>
+                  </View>
+               </View>
+             
+              </View>
+              <View style={styles.container}>
+               <View style={styles.item}>
+               <View style={styles.title4}>
+               <Animated.View
+               style={{
+                   width:'30%',
+                   height:'100%',
+                   opacity: 0.3,
+                   backgroundColor:'#fff',
+                   transform:[ { translateX: translateX2 } ]
+               }}
+               >    
+                  
+                  </Animated.View>
+                  </View>
+               </View>
+             
+              </View>
+              <View style={styles.container}>
+               <View style={styles.item}>
+               <View style={styles.title2}>
+               <Animated.View
+               style={{
+                   width:'30%',
+                   height:'100%',
+                   opacity: 0.3,
+                   backgroundColor:'#fff',
+                   transform:[ { translateX: translateX } ]
+               }}
+               >    
+                  
+                  </Animated.View>
+                  </View>
+               </View>
+             
+              </View>
+              <View style={styles.container}>
+               <View style={styles.item}>
+               <View style={styles.title3}>
+               <Animated.View
+               style={{
+                   width:'30%',
+                   height:'100%',
+                   opacity: 0.3,
+                   backgroundColor:'#fff',
+                   transform:[ { translateX: translateX2 } ]
+               }}
+               >    
+                  
+                  </Animated.View>
+                  </View>
+               </View>
+             
+              </View>
+              <View style={styles.container}>
+               <View style={styles.item}>
+               <View style={styles.title}>
+               <Animated.View
+               style={{
+                   width:'30%',
+                   height:'100%',
+                   opacity: 0.3,
+                   backgroundColor:'#fff',
+                   transform:[ { translateX: translateX } ]
+               }}
+               >    
+                  
+                  </Animated.View>
+                  </View>
+               </View>
+             
+              </View>
+              <View style={styles.container}>
+               <View style={styles.item}>
+               <View style={styles.title4}>
+               <Animated.View
+               style={{
+                   width:'30%',
+                   height:'100%',
+                   opacity: 0.3,
+                   backgroundColor:'#fff',
+                   transform:[ { translateX: translateX2 } ]
+               }}
+               >    
+                  
+                  </Animated.View>
+                  </View>
+               </View>
+             
+              </View>
+              <View style={styles.container}>
+               <View style={styles.item}>
+               <View style={styles.title2}>
+               <Animated.View
+               style={{
+                   width:'30%',
+                   height:'100%',
+                   opacity: 0.3,
+                   backgroundColor:'#fff',
+                   transform:[ { translateX: translateX } ]
+               }}
+               >    
+                  
+                  </Animated.View>
+                  </View>
+               </View>
+             
+              </View>
+              <View style={styles.container}>
+               <View style={styles.item}>
+               <View style={styles.title3}>
+               <Animated.View
+               style={{
+                   width:'30%',
+                   height:'100%',
+                   opacity: 0.3,
+                   backgroundColor:'#fff',
+                   transform:[ { translateX: translateX2 } ]
+               }}
+               >    
+                  
+                  </Animated.View>
+                  </View>
+               </View>
+             
+              </View>
+              <View style={styles.container}>
+               <View style={styles.item}>
+               <View style={styles.title}>
+               <Animated.View
+               style={{
+                   width:'30%',
+                   height:'100%',
+                   opacity: 0.3,
+                   backgroundColor:'#fff',
+                   transform:[ { translateX: translateX } ]
+               }}
+               >    
+                  
+                  </Animated.View>
+                  </View>
+               </View>
+             
+              </View>
+              <View style={styles.container}>
+               <View style={styles.item}>
+               <View style={styles.title4}>
+               <Animated.View
+               style={{
+                   width:'30%',
+                   height:'100%',
+                   opacity: 0.3,
+                   backgroundColor:'#fff',
+                   transform:[ { translateX: translateX2 } ]
+               }}
+               >    
+                  
+                  </Animated.View>
+                  </View>
+               </View>
+             
+              </View>
               </SafeAreaView>
               
           

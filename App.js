@@ -1,5 +1,4 @@
 import React, {Component} from 'react';
-import { StyleSheet,View, StatusBar } from 'react-native';
 import { NavigationContainer } from '@react-navigation/native';
 import { createStackNavigator } from '@react-navigation/stack';
 import Titulos from './Livros'
@@ -16,8 +15,8 @@ const {nome} = route.params
 }
 
 function Livros({navigation}){
-  return(     
-       <Titulos/>   
+  return(    
+    <Titulos/>       
   )
 }
 
@@ -29,7 +28,6 @@ function Vers({route,navigation}){
       <Versiculos liv={liv} cap={cap} />    
   )
 }
-
 
 export default function  App ()  {
 
@@ -52,8 +50,3 @@ export default function  App ()  {
      </NavigationContainer>    
   );
 }
-
-
-const styles = StyleSheet.create({
-});
-

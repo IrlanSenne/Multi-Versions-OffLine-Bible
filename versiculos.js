@@ -1,39 +1,50 @@
-import React,{useState} from 'react';
-import {  View, StyleSheet, Text, ScrollView, Dimensions } from 'react-native';
+import React,{Component,useState} from 'react';
+import {  View, StyleSheet, Text, ScrollView, Dimensions, Animated } from 'react-native';
 import Biblia from './biblia-acf.json'
+import Header from './header'
 
 const {height,width} = Dimensions.get('window')
 
 export default function versiculos(props){
-
+    const [scrollY,setScrollY] = useState(new Animated.Value(0))
     var vers = []
     const cap = Number(props.cap)
     const livro = props.liv
     const numeroVers =Biblia[livro][cap].v.length
    
 const [screenWidth,setScreenWidth]=useState(null)
-const [screenHeight,setScreenHeight]=useState(null)    
+const [screenHeight,setScreenHeight]=useState(null)
 
     function _onLayout(e){
         setScreenWidth(Dimensions.get('window').width)
         setScreenHeight(Dimensions.get('window').height)        
     }
- 
-
-
+    
     for(let i=0;i<numeroVers;i++){
         vers.push(
-            <View key={i}>              
+            <View key={i}>
                <View style={screenHeight > screenWidth ? styles.cx : styles.land} >
                     <Text> <View style={styles.numCx}><Text style={styles.num}>{Biblia[livro][cap].v[i].num}</Text></View><Text style={styles.txt}> {Biblia[livro][cap].v[i].t}</Text></Text>                            
                </View> 
             </View>
-        )           
+        )
     }    
-    return(       
-        <ScrollView onLayout={_onLayout.bind(this)}>       
-            <Text> {vers}</Text>    
-        </ScrollView>        
+    return(<View>
+         <Header nomeLivro={livro} cap={cap + 1} valorScroll={scrollY}/>
+  
+        <ScrollView
+        onScroll={Animated.event([{
+            nativeEvent:{
+                contentOffset:{ y: scrollY}
+            },
+
+        }],
+        {useNativeDriver:false})}
+         onLayout={_onLayout.bind(this)}>
+             
+            <Text> {vers}</Text>
+        </ScrollView>
+        </View>
     )
 }
 //react-native-shimmer-placeholder, Loading sem spinner
