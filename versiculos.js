@@ -1,89 +1,71 @@
-import React,{Component,useState} from 'react';
-import {  View, StyleSheet, Text, ScrollView, Dimensions, Animated } from 'react-native';
+import React, { useState } from "react";
+import { FlatList, SafeAreaView, StyleSheet, Text, TouchableOpacity } from "react-native";
 import Biblia from './biblia-acf.json'
 import Header from './header'
 
-const {height,width} = Dimensions.get('window')
 
-export default function versiculos(props){
-    const [scrollY,setScrollY] = useState(new Animated.Value(0))
-    var vers = []
+const Item = ({ item, onPress, style }) => (
+  <TouchableOpacity  onPress={onPress} style={[styles.item, style]}>
+    <Text><Text style={styles.num}>{Number(item.id) + 1}</Text><Text style={styles.title}>{item.title}</Text></Text>
+  </TouchableOpacity>
+);
+
+export default function App (props){
+    const DATA = [];
     const cap = Number(props.cap)
-    const livro = props.liv
-    const numeroVers =Biblia[livro][cap].v.length
+    const livro = props.liv   
+    const numeroVers = Biblia[livro][cap].v.length
+
+    for(let i = 0; i< numeroVers;i++){
+        let titulo=Biblia[livro][cap].v[i].t
+        DATA.push({id:String(i),title:titulo})
+    }
    
-const [screenWidth,setScreenWidth]=useState(null)
-const [screenHeight,setScreenHeight]=useState(null)
+    const [selectedId, setSelectedId] = useState(null);
 
-    function _onLayout(e){
-        setScreenWidth(Dimensions.get('window').width)
-        setScreenHeight(Dimensions.get('window').height)        
-    }
-    
-    for(let i=0;i<numeroVers;i++){
-        vers.push(
-            <View key={i}>
-               <View style={screenHeight > screenWidth ? styles.cx : styles.land} >
-                    <Text> <View style={styles.numCx}><Text style={styles.num}>{Biblia[livro][cap].v[i].num}</Text></View><Text style={styles.txt}> {Biblia[livro][cap].v[i].t}</Text></Text>                            
-               </View> 
-            </View>
-        )
-    }    
-    return(<View>
-         <Header nomeLivro={livro} cap={cap + 1} valorScroll={scrollY}/>
-  
-        <ScrollView
-        onScroll={Animated.event([{
-            nativeEvent:{
-                contentOffset:{ y: scrollY}
-            },
+  const renderItem = ({ item }) => {
+    const backgroundColor = item.id == selectedId  ? "rgba(146,135,135,0.5)" : "#eee";
+    return (
+      <Item
+        item={item}
+        onPress={() => {
+          setSelectedId(item.id)
 
-        }],
-        {useNativeDriver:false})}
-         onLayout={_onLayout.bind(this)}>
-             
-            <Text> {vers}</Text>
-        </ScrollView>
-        </View>
-    )
-}
-//react-native-shimmer-placeholder, Loading sem spinner
+        }}
+        style={{ backgroundColor }}
+      />
+    );
+   
+  };
+
+  return (
+    <SafeAreaView style={styles.container}>
+     <Header nomeLivro={livro} cap={cap + 1}/>
+      <FlatList
+        data={DATA}
+        renderItem={renderItem}
+        keyExtractor={(item) => item.id}
+        extraData={selectedId}
+      />
+    </SafeAreaView>
+  );
+};
+
 const styles = StyleSheet.create({
-    cx:{
-        flex:1,
-        width:height,      
-        flexDirection: "row",   
-        flexWrap: "wrap",
-        backgroundColor:'#eee',
-        padding:5,
-        marginBottom:5
-        
-    },
-    land:{
-        flex:1,
-        width:width,
-        flexDirection: "row",      
-        flexWrap: "wrap",
-        backgroundColor:'#eee',
-        paddingHorizontal:5
+  container: {
+    flex: 1,
+  
+  },
+  item: {
+    padding: 5,
+    marginHorizontal: 5,
+  },
+  title: {
+    fontSize: 20,
+  },
+  num:{
+    fontWeight:'bold',
+    color:'#806CA5',
+  }
+});
 
-    },
-    txt:{
-        fontSize:20,        
-    },
-    num:{
-        fontSize:15,
-        fontWeight:'bold',
-        color:'#806CA5',
-       
-    },
-    numCx:{
-        backgroundColor:'rgba(128,108,165,0.1)',
-        padding:5,
-        borderRadius:6,
-        
-    }
-    
-  });
-  
-  

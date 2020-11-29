@@ -1,11 +1,10 @@
 import React, {useState} from 'react';
-import { SafeAreaView, View, StyleSheet, Text,TouchableOpacity,ScrollView,Animated } from 'react-native';
+import { SafeAreaView, View, StyleSheet, Text,TouchableOpacity,ScrollView } from 'react-native';
 import Biblia from './biblia-acf.json'
 import { useNavigation } from '@react-navigation/native';
 import Header from './header'
 
 export default function Capitulos(props){
-    const [scrollY,setScrollY] = useState(new Animated.Value(0))
     const navigation = useNavigation();
     var caps = []
     const livro = props.nome     
@@ -29,15 +28,8 @@ export default function Capitulos(props){
       
     return(
         <SafeAreaView>    
-        <Header nomeLivro={livro} cap={capAtual} valorScroll={scrollY}/>      
-            <ScrollView onScroll={Animated.event([{
-            nativeEvent:{
-                contentOffset:{ y: scrollY}
-            },
-
-        }],
-        {useNativeDriver:false})}>
-                
+        <Header nomeLivro={livro} cap={capAtual}/>      
+            <ScrollView>                
                 <Text style={styles.title}>{livro}</Text>           
                 <Text> {caps}</Text>        
             </ScrollView>      

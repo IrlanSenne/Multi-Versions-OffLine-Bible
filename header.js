@@ -1,12 +1,11 @@
 import React,{useState} from 'react';
-import { View, StyleSheet, Text, Dimensions, StatusBar, TouchableOpacity, Animated } from 'react-native';
+import { View, StyleSheet, Text, Dimensions, StatusBar, TouchableOpacity } from 'react-native';
 import { useNavigation } from '@react-navigation/native';
 
 
 const {height, width} = Dimensions.get('window')
 
 export default function Header (props){
-    const valorScroll = props.valorScroll
     const navigation = useNavigation();
 
     const [tamPor,setTamPor] = useState(null)
@@ -23,22 +22,8 @@ export default function Header (props){
         navigation.navigate('Capitulo')
     }
     return(
-        <Animated.View 
-        style={[        
-        tamLan > tamPor ? styles.headerPortrait : styles.headerLand,
-        {
-            height:valorScroll.interpolate({
-                inputRange:[10,140,180],
-                outputRange:[75,30,0],
-                extrapolate:'clamp'
-            }),
-            opacity:valorScroll.interpolate({
-                inputRange:[1,102,178],
-                outputRange:[1,1,0],
-                extrapolate:'clamp'
-            })
-        }
-        ]} onLayout={_onLayout.bind(this)}>
+        <View 
+        style={tamLan > tamPor ? styles.headerPortrait : styles.headerLand} onLayout={_onLayout.bind(this)}>
          <StatusBar
             barStyle='light-content'
             backgroundColor='rgba(0,0,0,0.7)'
@@ -53,12 +38,11 @@ export default function Header (props){
            <View style={styles.topMenu3}>
                <Text style={{color:'#fff',fontSize:16}}>ACF</Text>
            </View>
-        </Animated.View>
+        </View>
     )
 }
 const styles = StyleSheet.create({
-    headerPortrait:{
-  
+    headerPortrait:{  
         height:62,    
         flexDirection: "row",   
         backgroundColor:'#000',
@@ -71,7 +55,6 @@ const styles = StyleSheet.create({
 
     },
     headerLand:{
-
         height:62, 
         flexDirection: "row",     
         backgroundColor:'#000',
@@ -82,7 +65,6 @@ const styles = StyleSheet.create({
         paddingRight:15,
         borderBottomWidth:2,
         borderBottomColor:'#fff'
-
     },
     topMenu:{
         width:'46%',
@@ -93,8 +75,7 @@ const styles = StyleSheet.create({
         justifyContent:'center',
         
     },
-    topMenu2:{
-  
+    topMenu2:{  
         width:'28%',
         height:40,
         borderWidth:2,
