@@ -2395,6 +2395,14 @@
 "flatted@^2.0.0":
   "version" "2.0.2"
 
+"follow-redirects@0.0.7":
+  "integrity" "sha1-NLkLqyqRGqNHVx2pDyK9NuzYqRk="
+  "resolved" "https://registry.npmjs.org/follow-redirects/-/follow-redirects-0.0.7.tgz"
+  "version" "0.0.7"
+  dependencies:
+    "debug" "^2.2.0"
+    "stream-consume" "^0.1.0"
+
 "for-in@^1.0.2":
   "version" "1.0.2"
 
@@ -4395,6 +4403,13 @@
 "react-is@^17.0.1":
   "version" "17.0.1"
 
+"react-native-axios@^0.17.1":
+  "integrity" "sha1-RCkpUKoHzu4uS9NJEG/3c774H48="
+  "resolved" "https://registry.npmjs.org/react-native-axios/-/react-native-axios-0.17.1.tgz"
+  "version" "0.17.1"
+  dependencies:
+    "follow-redirects" "0.0.7"
+
 "react-native-gesture-handler@^1.8.0", "react-native-gesture-handler@>= 1.0.0":
   "integrity" "sha512-E2FZa0qZ5Bi0Z8Jg4n9DaFomHvedSjwbO2DPmUUHYRy1lH2yxXUpSrqJd6yymu+Efzmjg2+JZzsjFYA2Iq8VEQ=="
   "resolved" "https://registry.npmjs.org/react-native-gesture-handler/-/react-native-gesture-handler-1.8.0.tgz"
@@ -5003,6 +5018,11 @@
 
 "stream-buffers@~2.2.0":
   "version" "2.2.0"
+
+"stream-consume@^0.1.0":
+  "integrity" "sha512-tNa3hzgkjEP7XbCkbRXe1jpg+ievoa0O4SCFlMOYEscGSS4JJsckGL8swUyAa/ApGU3Ae4t6Honor4HhL+tRyg=="
+  "resolved" "https://registry.npmjs.org/stream-consume/-/stream-consume-0.1.1.tgz"
+  "version" "0.1.1"
 
 "strict-uri-encode@^2.0.0":
   "integrity" "sha1-ucczDHBChi9rFC3CdLvMWGbONUY="
