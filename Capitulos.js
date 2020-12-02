@@ -18,7 +18,6 @@ export default function Capitulos(props){
                             <Text style={styles.txt}>{i+1}</Text> 
                     </TouchableOpacity>                               
                 </View>
-
             )           
         }    
         const listaVers = (l,c)=>{
@@ -27,9 +26,9 @@ export default function Capitulos(props){
         }
       
     return(
-        <SafeAreaView>    
+        <SafeAreaView style={{flex:1}}>    
         <Header nomeLivro={livro} cap={capAtual}/>      
-            <ScrollView>                
+            <ScrollView >                
                 <Text style={styles.title}>{livro}</Text>           
                 <Text> {caps}</Text>        
             </ScrollView>      
@@ -44,7 +43,7 @@ const styles = StyleSheet.create({
             fontWeight:'bold' 
     },
     cx:{
-        width:50,
+        width:75,
         height:40,
         borderWidth:1,
         borderColor:'#32054B',

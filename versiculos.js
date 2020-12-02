@@ -1,8 +1,8 @@
-import React, { Component } from "react";
-import { FlatList, SafeAreaView, StyleSheet, Text, TouchableOpacity,View, ScrollView } from "react-native";
+import React from "react";
+import {SafeAreaView, StyleSheet, Text, TouchableOpacity, ScrollView, View } from "react-native";
 import Biblia from './biblia-acf.json'
 import Header from './header'
-
+import Modal from 'react-native-modal'
 
 export default class Versiculos extends React.Component{
 
@@ -11,7 +11,6 @@ export default class Versiculos extends React.Component{
     const DATA = [];
     const cap = Number(props.cap)
     const livro = props.liv
-    const biblia = require('./biblia-acf.json')
     const numeroVers = Biblia[livro][cap].v.length
     for(let i = 0; i< numeroVers ;i++){
       let titulo=Biblia[livro][cap].v[i].t
@@ -20,7 +19,8 @@ export default class Versiculos extends React.Component{
     this.state = {   
       livro:props.liv,
       cap:Number(props.cap),
-      data:DATA
+      data:DATA,
+      visible:false
     }
   }
 
@@ -45,21 +45,38 @@ export default class Versiculos extends React.Component{
 
   render(){
     const {data} = this.state
+
     return (
       <SafeAreaView style={styles.container}>
       <Header nomeLivro={this.state.livro} cap={this.state.cap +1 }/>
+      <TouchableOpacity onPress={()=>{
+        this.setState({visible:true})
+      }}>
+        <Text>POPUP gfg</Text>
+      </TouchableOpacity>
      <ScrollView>
-       {
-         
+     {         
          this.state.data.map((item, index)=>{
            return(
-            <TouchableOpacity onPress={()=>this.selectionHandler(index)} style={item.isSelected ? {backgroundColor:"rgba(146,135,135,0.5)"} : {backgroundColor:'#eee'}} key={item.id}>
-        <Text><Text style={styles.num}>{Number(item.id) + 1}</Text><Text style={styles.title}>{item.title}</Text></Text>
-      </TouchableOpacity>
+            <TouchableOpacity onPress={()=>this.selectionHandler(index)} style={item.isSelected ? styles.selected : styles.notSelected} key={item.id}>
+             <Text><Text style={styles.num}>{Number(item.id) + 1} </Text><Text style={styles.title}> {item.title}</Text></Text>
+           </TouchableOpacity>
            )
          })
        }
-     </ScrollView>      
+     </ScrollView>
+     <Modal 
+        onBackdropPress={()=>this.setState({visible:false})}
+        isVisible={this.state.visible}>
+       <View style={{backgroundColor:'#fff',height:100}}>
+         <Text>M o d a l</Text>
+         <TouchableOpacity onPress={()=>{
+        this.setState({visible:false})
+      }}>
+        <Text>POPUP gfg</Text>
+      </TouchableOpacity>
+       </View>
+     </Modal>
      </SafeAreaView>
     )
   }
@@ -67,8 +84,7 @@ export default class Versiculos extends React.Component{
 
 const styles = StyleSheet.create({
   container: {
-    flex: 1,
-  
+    flex: 1,  
   },
   item: {
     padding: 5,
@@ -76,9 +92,19 @@ const styles = StyleSheet.create({
   },
   title: {
     fontSize: 20,
+    color:"#000"
   },
   num:{
+    fontSize:15,
     fontWeight:'bold',
     color:'#806CA5',
+  },
+  selected:{
+   paddingHorizontal:6,
+    backgroundColor:"#c9c9ca",
+  },
+  notSelected:{
+    paddingHorizontal:6,
+    backgroundColor:'#eee'
   }
 });

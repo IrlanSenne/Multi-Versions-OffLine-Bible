@@ -1,8 +1,6 @@
-import React, {Component, useState, useEffect} from 'react';
-import { SafeAreaView, View,TouchableOpacity, ScrollView, StyleSheet, Text,Dimensions } from 'react-native';
+import React, { useState} from 'react';
+import { SafeAreaView, View,TouchableOpacity, ScrollView, StyleSheet, Text,Dimensions, StatusBar } from 'react-native';
 import { useNavigation } from '@react-navigation/native';
-import ShimmerEffect from './shimmerEffect'
-import Header from './header'
 
 const {height,width} = Dimensions.get('window')
 
@@ -15,12 +13,6 @@ export default function livros(){
         setScreenWidth(Dimensions.get('window').width)
         setScreenHeight(Dimensions.get('window').height)        
     }
-
-  useEffect(()=>{
-    let timer = setInterval(()=>{
-      setLoading(false)
-    },1000)
-  },[])
 
   const [loading, setLoading]=useState(true)
 
@@ -72,14 +64,16 @@ export default function livros(){
       navigation.navigate('Capitulo',{nome:t} )
   }    
     return(
-        <SafeAreaView  style={styles.container}>
-       
-        <ShimmerEffect visible={loading}>     
-        <ScrollView onLayout={_onLayout.bind(this)}>       
-            <Text> {titulos}</Text>    
-        </ScrollView> 
-     </ShimmerEffect>
-    </SafeAreaView>
+        <SafeAreaView  onLayout={_onLayout.bind(this)} style={styles.container}>      
+         <StatusBar
+            barStyle='light-content'
+            backgroundColor='#3f1775'
+            hidden={false}
+    />    
+          <ScrollView >       
+              <Text> {titulos}</Text>    
+          </ScrollView> 
+      </SafeAreaView>
     )
 }
 
@@ -92,7 +86,7 @@ const styles = StyleSheet.create({
       width:65,
       height:65,
       borderRadius:60,
-      backgroundColor:'#32054B',
+      backgroundColor:'#3f1775',
       alignItems:'center',
       justifyContent:'center',
       padding:5     

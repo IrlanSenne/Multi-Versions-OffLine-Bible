@@ -1,5 +1,5 @@
 import React,{useState} from 'react';
-import { View, StyleSheet, Text, Dimensions, StatusBar, TouchableOpacity } from 'react-native';
+import { SafeAreaView, StyleSheet, Text, Dimensions, StatusBar, TouchableOpacity } from 'react-native';
 import { useNavigation } from '@react-navigation/native';
 
 
@@ -22,23 +22,23 @@ export default function Header (props){
         navigation.navigate('Capitulo')
     }
     return(
-        <View 
+        <SafeAreaView 
         style={tamLan > tamPor ? styles.headerPortrait : styles.headerLand} onLayout={_onLayout.bind(this)}>
          <StatusBar
             barStyle='light-content'
             backgroundColor='rgba(0,0,0,0.7)'
             hidden={true}
-    />           
+    />  
            <TouchableOpacity onPress={()=>_onPress()} style={styles.topMenu}>
              <Text style={{color:'#fff',fontSize:16}}>{props.nomeLivro}</Text>
            </TouchableOpacity>
            <TouchableOpacity onPress={()=>_onPress2()} style={styles.topMenu2}>
                <Text style={{color:'#fff',fontSize:16}}>{props.cap}</Text>
            </TouchableOpacity>
-           <View style={styles.topMenu3}>
+           <TouchableOpacity style={styles.topMenu3}>
                <Text style={{color:'#fff',fontSize:16}}>ACF</Text>
-           </View>
-        </View>
+           </TouchableOpacity>
+        </SafeAreaView>
     )
 }
 const styles = StyleSheet.create({
