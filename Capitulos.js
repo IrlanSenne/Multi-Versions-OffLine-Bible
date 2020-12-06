@@ -27,7 +27,7 @@ export default function Capitulos(props){
       
     return(
         <SafeAreaView style={{flex:1}}>    
-        <Header nomeLivro={livro} cap={capAtual}/>      
+        <Header  nomeLivro={livro} cap={capAtual}/>      
             <ScrollView >                
                 <Text style={styles.title}>{livro}</Text>           
                 <Text> {caps}</Text>        
@@ -40,7 +40,7 @@ const styles = StyleSheet.create({
         txt:{ 
             color:'rgba(178,151,224,0.9)',
             fontSize:20,
-            fontWeight:'bold' 
+            fontFamily:'InconsolataCondensed-Regular'
     },
     cx:{
         width:75,
@@ -57,7 +57,8 @@ const styles = StyleSheet.create({
     title:{
         backgroundColor:'rgba(138,106,124,0.3)',
         color:'#32054B',
-        fontSize:25,
+        fontFamily:'AmaticSC-Bold',
+        fontSize:30,
         padding:10,
         letterSpacing:2,
         margin:5

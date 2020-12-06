@@ -51,7 +51,7 @@ export default function livros(){
                  <Text><View style={{flex:1,flexDirection:'row',width:width}}><View style={{width:'25%'}}><View style={styles.ab}><Text style={{
                     color:'#fff',
                     fontSize:15,
-                    fontWeight:'bold',
+                    fontFamily:'DancingScript-Regular',
                     letterSpacing:2                    
                    }}
                    >{livros[i].a}</Text></View></View><View style={{width:'75%', justifyContent:'center'}}><Text style={styles.title}>{livros[i].livro}</Text></View></View></Text>
@@ -110,8 +110,8 @@ const styles = StyleSheet.create({
       justifyContent:'center'     
     },
     title: {
+      fontFamily:'Dosis-Regular',
       color:'#32054B',
-      fontSize: 20,
-      fontWeight:'bold'
-    },
+      fontSize: 25,
+    letterSpacing:1    },
   });     

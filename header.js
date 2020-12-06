@@ -7,7 +7,7 @@ const {height, width} = Dimensions.get('window')
 
 export default function Header (props){
     const navigation = useNavigation();
-
+   
     const [tamPor,setTamPor] = useState(null)
     const [tamLan,setTamLan] = useState(null)
 
@@ -20,6 +20,9 @@ export default function Header (props){
     }
     function _onPress2(){
         navigation.navigate('Capitulo')
+    }
+    function _onPress3(){
+
     }
     return(
         <SafeAreaView 
@@ -35,27 +38,27 @@ export default function Header (props){
            <TouchableOpacity onPress={()=>_onPress2()} style={styles.topMenu2}>
                <Text style={{color:'#fff',fontSize:16}}>{props.cap}</Text>
            </TouchableOpacity>
-           <TouchableOpacity style={styles.topMenu3}>
+           <TouchableOpacity onPress={()=>_onPress3()} style={styles.topMenu3}>
                <Text style={{color:'#fff',fontSize:16}}>ACF</Text>
            </TouchableOpacity>
+          
+          
         </SafeAreaView>
     )
 }
 const styles = StyleSheet.create({
     headerPortrait:{  
-        height:62,    
+        height:48,    
         flexDirection: "row",   
         backgroundColor:'#000',
         alignItems:'center',
         alignContent:'center',
-       justifyContent:'space-around',
+        justifyContent:'space-around',
         paddingHorizontal:20,
-        borderBottomWidth:2,
-        borderBottomColor:'#fff'
 
     },
     headerLand:{
-        height:62, 
+        height:48, 
         flexDirection: "row",     
         backgroundColor:'#000',
         alignItems:'center',
@@ -63,12 +66,10 @@ const styles = StyleSheet.create({
         justifyContent:'space-around',
         paddingLeft:15,
         paddingRight:15,
-        borderBottomWidth:2,
-        borderBottomColor:'#fff'
     },
     topMenu:{
-        width:'46%',
-        height:40,
+        width:'45%',
+        height:31,
         borderWidth:2,
         borderColor:'rgba(178,151,224,0.8)',    
         alignItems:'center',
@@ -76,8 +77,8 @@ const styles = StyleSheet.create({
         
     },
     topMenu2:{  
-        width:'28%',
-        height:40,
+        width:'25%',
+        height:31,
         borderWidth:2,
         borderColor:'rgba(178,151,224,0.8)',
         alignItems:'center',
@@ -86,12 +87,21 @@ const styles = StyleSheet.create({
        
     },
     topMenu3:{   
-        width:'28%',
-        height:40,
+        width:'30%',
+        height:31,
         borderWidth:2,
         borderColor:'rgba(178,151,224,0.8)',     
         alignItems:'center',
         justifyContent:'center',
+        
+    },
+    topMenu4:{   
+        width:'15%',
+        height:31,  
+        borderColor:'#000',     
+        alignItems:'flex-end',
+        justifyContent:'center',
+        paddingRight:10
         
     }
 });  
