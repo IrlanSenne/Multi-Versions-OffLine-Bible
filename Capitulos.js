@@ -13,10 +13,10 @@ export default function Capitulos(props){
         
         for(let i=0;i<numeroCaps;i++){
             caps.push(
-                <View key={i}>               
+                <View key={i}>     
                     <TouchableOpacity style={styles.cx} onPress={()=>listaVers(livro,i)}>                       
                             <Text style={styles.txt}>{i+1}</Text> 
-                    </TouchableOpacity>                               
+                    </TouchableOpacity>   
                 </View>
             )           
         }    
@@ -26,11 +26,14 @@ export default function Capitulos(props){
         }
       
     return(
-        <SafeAreaView style={{flex:1}}>    
+        <SafeAreaView style={{flex:1,backgroundColor:'rgb(51,42,66)'}}>    
         <Header  nomeLivro={livro} cap={capAtual}/>      
-            <ScrollView >                
-                <Text style={styles.title}>{livro}</Text>           
-                <Text> {caps}</Text>        
+            <ScrollView >    
+            <View style={{flex:1,alignItems:'center',alignContent:'center',width:'100%',height:'100%',paddingBottom:30}}>         
+                <View style={{width:'92%',backgroundColor:'rgba(0,0,0,0.3)',elevation: 15,height:70,marginBottom:20,borderRadius:20,marginTop:10,alignItems:'center',justifyContent:'center'}}>
+                <Text style={styles.title}>{livro}</Text></View>           
+                <Text> {caps}</Text>  
+            </View>         
             </ScrollView>      
         </SafeAreaView>
     )
@@ -38,27 +41,26 @@ export default function Capitulos(props){
 
 const styles = StyleSheet.create({
         txt:{ 
-            color:'rgba(178,151,224,0.9)',
-            fontSize:20,
+            color:'#6617AF',
+            fontSize:30,
             fontFamily:'InconsolataCondensed-Regular'
     },
     cx:{
-        width:75,
-        height:40,
+        width:60,
+        height:35,
         borderWidth:1,
         borderColor:'#32054B',
-        backgroundColor:'#000',
+        backgroundColor:'#fff',
         alignItems:'center',
         justifyContent:'center',
-        margin:7,
-        padding:10,
+        margin:4,
+        padding:5,
         borderRadius:5
     },
     title:{
-        backgroundColor:'rgba(138,106,124,0.3)',
-        color:'#32054B',
-        fontFamily:'AmaticSC-Bold',
-        fontSize:30,
+        color:'#fff',
+        fontFamily:'DancingScript-Regular',
+        fontSize:40,
         padding:10,
         letterSpacing:2,
         margin:5
