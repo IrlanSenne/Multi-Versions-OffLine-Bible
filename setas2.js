@@ -3,16 +3,16 @@ import {  StyleSheet,TouchableOpacity } from 'react-native';
 import FontAwesome5 from 'react-native-vector-icons/FontAwesome5';
 
 
-export default class Setas extends React.Component{
+export default class Setas2 extends React.Component{
     constructor(props){
         super(props)      
       }   
   
       render(){
-          return( 
-          <TouchableOpacity  onPress={()=>this.props.anterior()} style={[styles.sets]}>
-               <FontAwesome5 style={{color:'rgba(123,0,0,0.6)',fontWeight:'bold'}} name={'angle-left'} size={30} />
-          </TouchableOpacity>
+          return(
+            <TouchableOpacity  onPress={()=>this.props.proximo()} style={[styles.sets]}>
+                 <FontAwesome5 style={{color:'rgba(123,0,0,0.6)',fontWeight:'bold'}} name={'angle-right'} size={30} />
+            </TouchableOpacity> 
           )
       }
 }
@@ -21,7 +21,7 @@ const styles = StyleSheet.create({
     sets:{
         position:'absolute',
         top:'60%',
-        left:'0.8%',
+        left:'92.5%',
         backgroundColor:'rgba(250,250,250,1)',
         width:40,
         height:40,
