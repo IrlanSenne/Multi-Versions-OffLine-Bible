@@ -20,7 +20,7 @@ export default class Setas extends React.Component{
 const styles = StyleSheet.create({
     sets:{
         position:'absolute',
-        top:'60%',
+        top:'70%',
         left:'0.8%',
         backgroundColor:'rgba(250,250,250,1)',
         width:40,
@@ -28,6 +28,7 @@ const styles = StyleSheet.create({
         borderRadius:50,
         alignItems:'center',
         justifyContent:'center',
-        padding:5
+        padding:5,
+        elevation:10
       },
 });  

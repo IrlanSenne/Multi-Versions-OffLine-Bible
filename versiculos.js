@@ -40,9 +40,10 @@ export default class Versiculos extends PureComponent{
       visible:false,
       contador:0,
       cores:['#EB7F8B','#DAE17A','#AB8FAC','#78C0C9','#7FB9AD'],
-      painted:null,
+      painted:'#c9c9ca',
       fontEstilo:['','BarlowCondensed-Regular','DancingScript-Regular','Dosis-Regular','InconsolataCondensed-Regular'],
-      pos:0
+      pos:0,
+      ind:null
     }
 
     this.requestLocal = this.requestLocal.bind(this)
@@ -62,7 +63,7 @@ componentDidMount = async() =>{
  
       for(let v = 0; v< numeroVers ;v++){
         let versiculo=Biblia[livro][cap].v[v].t
-        DATA.push({id:String(v),versiculo:versiculo,isSelected:false,painted:false})
+        DATA.push({id:String(v),versiculo:versiculo,isSelected:false,isPainted:false,color:'',secundario:false})
       }
     this.setState({
       data:DATA,
@@ -70,28 +71,28 @@ componentDidMount = async() =>{
     })
   }
 
-  selectionHandler =(ind)=>{
-    
+  selectionHandler =(ind)=>{    
     const {data} = this.state
-
+   
     let arr = data.map((item,index)=>{
+
       if(ind == index){
-        if(item.isSelected == false){
+       if(item.isSelected){
+          this.setState({contador:this.state.contador - 1})
+          item.isSelected = false     
+        }else if(item.isSelected == false){
           this.setState({contador:this.state.contador + 1})
           item.isSelected = true
-        }else if(item.isSelected == true){
-          this.setState({contador:this.state.contador - 1})
-          item.isSelected = false
         }
-             
+        if(item.isPainted){
+          item.isPainted = false
+        }
       }     
-     
       return {...item}
     })
     
-    this.setState({data : arr})
+    this.setState({data : arr,ind:ind})
   }
-
  
   save = async () => {
     try { 
@@ -101,7 +102,6 @@ componentDidMount = async() =>{
     }catch(error) {
         Alert.alert('Não foi possível gravar as alterações')
     }
-
     this.setState({
       visible:false
     })
@@ -121,11 +121,8 @@ componentDidMount = async() =>{
   if(this.state.pos == 4){
     this.setState({pos:0})
   }else{
-    this.setState({
-      pos:this.state.pos +1
-    })
-  }
-    
+    this.setState({pos:this.state.pos +1})
+    }    
   }
 
   diminuir = () => {   
@@ -157,7 +154,7 @@ componentDidMount = async() =>{
    
         for(let v = 0; v< numeroVers ;v++){
           let versiculo=Biblia[livro][cap].v[v].t
-          DATA2.push({id:String(v),versiculo:versiculo,isSelected:false})
+          DATA2.push({id:String(v),versiculo:versiculo,isSelected:false,isPainted:false,color:'',secundario:false})
         }
       this.setState({
         data:DATA2,
@@ -180,7 +177,7 @@ componentDidMount = async() =>{
   
         for(let v = 0; v< numeroVers ;v++){
           let versiculo=Biblia[livro][cap].v[v].t
-          DATA2.push({id:String(v),versiculo:versiculo,isSelected:false,modal:false})
+          DATA2.push({id:String(v),versiculo:versiculo,isSelected:false,isPainted:false,color:'',secundario:false})
         }
       this.setState({
         data:DATA2,
@@ -190,38 +187,55 @@ componentDidMount = async() =>{
       Alert.alert('Esse é o último capítulo')
     }    
   }
-  setColor(color){
-    this.setState({painted:color})
+  setColor(color){   
+    const {data} = this.state
+
+    let arr = data.map((item)=>{
+      if(item.isSelected){
+                 item.isSelected = false       
+                 item.isPainted = true
+                 item.color = color  
+      }
+      return {...item}
+    })    
+    this.setState({data : arr,contador:0})  
   }
+
+  backGro(selecionado,pintado,corDinamica,secundario){    
+    if (pintado){
+      return corDinamica
+    }else if (selecionado){
+      return '#c9c9ca'
+    }
+  } 
 
   render(){
     const {data} = this.state
     return (
       <SafeAreaView style={styles.container}>       
       <Header nomeLivro={this.state.livro} cap={this.state.cap + 1}/>
-      <Text>{this.state.painted}</Text>
-        <View style={{flex:1, padding:7}}>
+        <View style={{flex:1, padding:1,paddingBottom:7}}>
             <ScrollView>
             {         
                 this.state.data.map((item, index)=>{
                   return(
-                    <TouchableOpacity onPress={()=>this.selectionHandler(index)} style={item.isSelected == true ? styles.selected :  styles.notSelected} key={item.id+index}>
+                    <TouchableOpacity 
+                      onPress={()=>this.selectionHandler(index)} 
+                      style={{borderRadius: 7,paddingHorizontal:5,marginVertical:1,backgroundColor:this.backGro(item.isSelected,item.isPainted,item.color,item.secundario)}} key={item.id+index}
+                    >
                     <Text><Text style={styles.num}>{Number(item.id) + 1} </Text><Text style={{ fontSize: this.state.fontTam, color:"#000",fontFamily:this.state.fontEstilo[this.state.pos]}}> {item.versiculo}</Text></Text>
                   </TouchableOpacity>
                   )
                 })
               }   
-              <View style={{flex:1,alignItems:'center',marginTop:40,marginBottom:10}}>
-                  <FontAwesome5  onPress={()=> this.setState({visible:true})} style={{color:'rgba(123,0,0,0.6)'}} name={'cog'} size={20} />
-              </View>  
-             
-            </ScrollView>           
-            
-            <Setas anterior={()=>this.before()}/>
-            <Setas2 proximo={()=>this.next()}/>
-           
-           
-                 
+              <View  onPress={()=> this.setState({visible:true})} style={{flex:1,alignItems:'center',marginTop:40,marginBottom:10}}>
+                  <FontAwesome5  style={{color:'rgba(123,0,0,0.6)'}} name={'cog'} size={20} />
+              </View>               
+            </ScrollView>   
+
+            {this.state.contador < 1 ?  <Setas anterior={()=>this.before()}/> : null}
+            {this.state.contador < 1 ? <Setas2 proximo={()=>this.next()}/> : null}  
+
             <Modal 
               visible={this.state.visible} 
               diminuir={()=>this.diminuir()} 
@@ -263,7 +277,7 @@ const styles = StyleSheet.create({
 },
 container3:{
     position:'absolute',
-    top:'90%',
+    top:'86%',
     left:0 ,
     flex:1,
     flexDirection:'row',
@@ -297,14 +311,6 @@ modal:{
     fontSize:15,
     fontWeight:'bold',
     color:'#806CA5',
-  },
-  selected:{
-   paddingHorizontal:6,
-    backgroundColor:"#c9c9ca",
-  },
-  notSelected:{
-    paddingHorizontal:6,
-    backgroundColor:'#eee'
   },
   popTxt:{
     color:'#182E44',
