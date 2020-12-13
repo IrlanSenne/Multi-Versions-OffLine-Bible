@@ -1,13 +1,13 @@
 import React, {PureComponent} from  "react";
-import {SafeAreaView, StyleSheet, Text, TouchableOpacity, ScrollView, View,Dimensions,Alert,AsyncStorage } from "react-native";
+import {SafeAreaView, StyleSheet, Text, TouchableOpacity, ScrollView, View,Alert,AsyncStorage,Share } from "react-native";
 import Biblia from './biblia-acf.json'
 import Header from './header'
 import FontAwesome5 from 'react-native-vector-icons/FontAwesome5';
 import Setas from './setas'
 import Setas2 from './setas2'
 import Modal from './modal'
+import Clipboard from '@react-native-community/clipboard'
 
-const height = Dimensions.get('window').height
 export default class Versiculos extends PureComponent{
  loadData = async () => {
   try {
@@ -39,15 +39,15 @@ export default class Versiculos extends PureComponent{
       fontTam:20,
       visible:false,
       contador:0,
-      cores:['#EB7F8B','#DAE17A','#AB8FAC','#78C0C9','#7FB9AD'],
+      cores:['#EB7F8BAA','#DAE17AAA','#AB8FACAA','#78C0C9AA','#7FB9ADAA'],
       painted:'#c9c9ca',
       fontEstilo:['','BarlowCondensed-Regular','DancingScript-Regular','Dosis-Regular','InconsolataCondensed-Regular'],
       pos:0,
-      ind:null
+      ind:null,
+      copiedText:'',
+      feedBackClip:false
     }
-
-    this.requestLocal = this.requestLocal.bind(this)
-  
+    this.requestLocal = this.requestLocal.bind(this)  
   }
 
 componentDidMount = async() =>{
@@ -63,7 +63,7 @@ componentDidMount = async() =>{
  
       for(let v = 0; v< numeroVers ;v++){
         let versiculo=Biblia[livro][cap].v[v].t
-        DATA.push({id:String(v),versiculo:versiculo,isSelected:false,isPainted:false,color:'',secundario:false})
+        DATA.push({id:String(v),versiculo:versiculo,isSelected:false,isPainted:false,color:''})
       }
     this.setState({
       data:DATA,
@@ -154,7 +154,7 @@ componentDidMount = async() =>{
    
         for(let v = 0; v< numeroVers ;v++){
           let versiculo=Biblia[livro][cap].v[v].t
-          DATA2.push({id:String(v),versiculo:versiculo,isSelected:false,isPainted:false,color:'',secundario:false})
+          DATA2.push({id:String(v),versiculo:versiculo,isSelected:false,isPainted:false,color:''})
         }
       this.setState({
         data:DATA2,
@@ -162,8 +162,7 @@ componentDidMount = async() =>{
       })   
     }else if((this.state.cap + 1) <= 1){
       Alert.alert('Esse é o primeiro capítulo')
-    }
-   
+    }   
   }
 
   next = ()=>{
@@ -177,7 +176,7 @@ componentDidMount = async() =>{
   
         for(let v = 0; v< numeroVers ;v++){
           let versiculo=Biblia[livro][cap].v[v].t
-          DATA2.push({id:String(v),versiculo:versiculo,isSelected:false,isPainted:false,color:'',secundario:false})
+          DATA2.push({id:String(v),versiculo:versiculo,isSelected:false,isPainted:false,color:''})
         }
       this.setState({
         data:DATA2,
@@ -201,13 +200,76 @@ componentDidMount = async() =>{
     this.setState({data : arr,contador:0})  
   }
 
-  backGro(selecionado,pintado,corDinamica,secundario){    
+  backGro(selecionado,pintado,corDinamica){    
     if (pintado){
+      return corDinamica
+    }else if (selecionado == false && pintado){
       return corDinamica
     }else if (selecionado){
       return '#c9c9ca'
     }
-  } 
+  }
+
+  getText(versiculos){
+    const {data} = this.state    
+    const versTotal = []
+    const normal = []
+   
+    data.map((item)=>{
+      if(item.isSelected){
+              versiculos.push(`${item.versiculo}`)
+              versTotal.push(Number(item.id)+1)
+              item.isSelected = false
+      }    
+    })
+for(let i=0;i<versTotal.length -1;i++){
+  if(versTotal[i] == versTotal[i+1]-1){
+    normal.push(true)
+  }else if(versTotal[i] != versTotal[i]-1){
+    normal.push(false)
+  }
+}
+
+if(normal.indexOf(false) > -1){
+  if(versTotal.length > 1){
+    var ultimo = versTotal[versTotal.length-1]
+    versTotal.pop()
+    
+    versiculos.push(`${this.state.livro} ${this.state.cap + 1}:${versTotal} e  ${ultimo}`)
+  }else{
+    versiculos.push(`${this.state.livro} ${this.state.cap + 1}:${versTotal[0]}`)
+  }
+ 
+}else if(normal.indexOf(false) == -1){
+  if(versTotal.length == 1){
+    versiculos.push(`${this.state.livro} ${this.state.cap + 1}:${Number(versTotal[0])}`)
+   }else if(versTotal.length > 1){
+    versiculos.push(`${this.state.livro} ${this.state.cap + 1}:${Number(versTotal[0])}-${Number(versTotal[Number(versTotal.length)-1])}`)
+   }
+}
+  }
+
+   onShare = async () => {
+    const versiculos = []    
+    this.getText(versiculos)
+    try {
+      const result = await Share.share({
+        message:versiculos.join('\n'),
+      })      
+    } catch (error) {
+      Alert.alert('Erro ',error.message);
+    }
+  }
+
+  copyToClipboard = () => {
+    const versiculos = []    
+    this.getText(versiculos)
+    Clipboard.setString(versiculos.join('\n'));
+    this.setState({contador:0,feedBackClip:true})
+    setTimeout(() => {
+      this.setState({ feedBackClip: false })
+    }, 3000)
+  }
 
   render(){
     const {data} = this.state
@@ -221,16 +283,16 @@ componentDidMount = async() =>{
                   return(
                     <TouchableOpacity 
                       onPress={()=>this.selectionHandler(index)} 
-                      style={{borderRadius: 7,paddingHorizontal:5,marginVertical:1,backgroundColor:this.backGro(item.isSelected,item.isPainted,item.color,item.secundario)}} key={item.id+index}
+                      style={{borderRadius: 7,paddingHorizontal:5,marginVertical:1,backgroundColor:this.backGro(item.isSelected,item.isPainted,item.color)}} key={item.id+index}
                     >
                     <Text><Text style={styles.num}>{Number(item.id) + 1} </Text><Text style={{ fontSize: this.state.fontTam, color:"#000",fontFamily:this.state.fontEstilo[this.state.pos]}}> {item.versiculo}</Text></Text>
                   </TouchableOpacity>
                   )
                 })
               }   
-              <View  onPress={()=> this.setState({visible:true})} style={{flex:1,alignItems:'center',marginTop:40,marginBottom:10}}>
+              <TouchableOpacity  onPress={()=> this.setState({visible:true})} style={{flex:1,alignItems:'center',marginTop:40,marginBottom:10}}>
                   <FontAwesome5  style={{color:'rgba(123,0,0,0.6)'}} name={'cog'} size={20} />
-              </View>               
+              </TouchableOpacity>               
             </ScrollView>   
 
             {this.state.contador < 1 ?  <Setas anterior={()=>this.before()}/> : null}
@@ -248,10 +310,14 @@ componentDidMount = async() =>{
               pos={this.state.pos}
             />
         </View>
+        {this.state.feedBackClip ? 
+        <View style={styles.container4}>
+          <Text style={{color:'#fff'}}>Texto copiado</Text>
+        </View> : null}
         {   
             this.state.contador > 0 ?
              
-                        <View style={styles.container3}> 
+                        <View style={styles.container3}>                    
                         {
                       this.state.cores.map((cor)=>{
                         return(
@@ -261,6 +327,12 @@ componentDidMount = async() =>{
                         )
                       })
                         }
+                        <TouchableOpacity  onPress={()=> this.onShare()} style={{width:27,height:27,marginHorizontal:20,alignItems:'center',justifyContent:'center'}}>
+                           <FontAwesome5  style={{color:'#fff'}} name={'share-alt'} size={22} />
+                        </TouchableOpacity>    
+                        <TouchableOpacity  onPress={()=> this.copyToClipboard()} style={{width:27,height:27,margin:5,alignItems:'center',justifyContent:'center'}}>
+                           <FontAwesome5  style={{color:'#fff'}} name={'copy'} size={22} />
+                        </TouchableOpacity>  
                       </View>  
               : null 
             }   
@@ -273,7 +345,7 @@ const styles = StyleSheet.create({
   squareColor:{
     width:27,
     height:27,
-    margin:5
+    marginHorizontal:8
 },
 container3:{
     position:'absolute',
@@ -281,15 +353,14 @@ container3:{
     left:0 ,
     flex:1,
     flexDirection:'row',
-    backgroundColor:'rgba(0,0,0,0.6)',
+    backgroundColor:'rgba(0,0,0,0.8)',
     justifyContent:'center',
     alignItems:'center',
     alignContent:'center',
     borderTopRightRadius:10,
     borderTopLeftRadius:10,
     width:'100%',
-    maxHeight:40,
-   
+    maxHeight:40,   
 },
 modal:{
     marginVertical:10,
@@ -333,5 +404,18 @@ modal:{
     justifyContent:'center',
     borderBottomWidth:2,
     borderBottomColor:'#fff'
+},
+container4:{
+  position:'absolute',
+  top:'90%',
+  left:'35%',
+  flexDirection:'row',
+  backgroundColor:'rgba(0,0,0,0.8)',
+  justifyContent:'center',
+  alignItems:'center',
+  alignContent:'center',
+  borderRadius:10,
+  width:120,
+  height:30
 }
 });
